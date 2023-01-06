@@ -65,27 +65,65 @@
                 </thead>
                 <tbody>
                     <?php
-                        $sn = 0;
-                        $sql = mysqli_query($conn, "select * from products");
-                        if(!$sql){
-                            exit("ERROR :".mysqli_error($conn));
-                        }else{
-                            while($row=mysqli_fetch_assoc($sql)){
-                                $sn++;
+                        if($_SESSION['user_type'] == 1){
+                            $sn = 0;
+                            $sql = mysqli_query($conn, "select * from products");
+                            if(!$sql){
+                                exit("ERROR :".mysqli_error($conn));
+                            }else{
+                                while($row=mysqli_fetch_assoc($sql)){
+                                    $sn++;
                     ?>
-                                <tr>
-                                <td scope="row"><?=$sn ?></td>
-                                <td>
-                                    <img class="img-fluid rounded" style="border-radius: 300px; height: 100px" src="<?=$row['product_img'] ?>" alt="<?=$row['product_name'] ?>">
-                                </td>
-                                <td><?=$row['product_name'] ?></td>
-                                <td><?=$row['product_price'] ?></td>
-                                <td>
-                                    <a href="editProduct.php?action=<?=$row['id'] ?>"><i class="fa fa-pencil"></i></a>
-                                    <a href="editProduct.php?action=<?=$row['id'] ?>"><i class="fa fa-trash"></i></a>
-                                </td>
-                                </tr>
+                    <h2>admin</h2>
+
+                                    <tr>
+                                    <td scope="row"><?=$sn ?></td>
+                                    <td>
+                                        <img class="img-fluid rounded" style="border-radius: 300px; height: 100px" src="<?=$row['product_img'] ?>" alt="<?=$row['product_name'] ?>">
+                                    </td>
+                                    <td><?=$row['product_name'] ?></td>
+                                    <td><?=$row['product_price'] ?></td>
+                                    <td>
+                                        <a href="editProduct.php?action=<?=$row['id'] ?>"><i class="fa fa-pencil"></i></a>
+                                        <a href="editProduct.php?action=<?=$row['id'] ?>"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                    </tr>
                     <?php
+                                }
+                            }
+                        }else{
+                            $sn = 0;
+                            $cId = $_SESSION['user_identity'];
+                            $sql = mysqli_query($conn, "select * from products where user_id = $cId");
+                            if(!$sql){
+                                exit("ERROR :".mysqli_error($conn));
+                            }else{
+                                if(mysqli_num_rows($sql)){
+                                    while($row=mysqli_fetch_assoc($sql)){
+                                        $sn++;
+                    ?>
+
+                                        <tr>
+                                        <td scope="row"><?=$sn ?></td>
+                                        <td>
+                                            <img class="img-fluid rounded" style="border-radius: 300px; height: 100px" src="<?=$row['product_img'] ?>" alt="<?=$row['product_name'] ?>">
+                                        </td>
+                                        <td><?=$row['product_name'] ?></td>
+                                        <td><?=$row['product_price'] ?></td>
+                                        <td>
+                                            <a href="editProduct.php?action=<?=$row['id'] ?>"><i class="fa fa-pencil"></i></a>
+                                            <a href="editProduct.php?action=<?=$row['id'] ?>"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                        </tr>
+                    <?php
+                                    }
+                                }else{
+                    ?>
+                                        <tr>
+                                            <td>No Record</td>
+                                        </tr>
+                    <?php
+                                }
                             }
                         }
                     ?>

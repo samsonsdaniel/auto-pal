@@ -66,17 +66,24 @@
         <div class="container">
             <div class="row mt-3">
                 <?php
-                        $sn = 0;
-                        $sql = mysqli_query($conn, "select * from products");
-                        if(!$sql){
-                            exit("ERROR :".mysqli_error($conn));
-                        }else{
-                            while($row=mysqli_fetch_assoc($sql)){
-                                $sn++;
-                                // echo "<pre>";
-                                // exit(print_r($row));
-                                // echo "<pre>";
-                    ?>
+                    $sn = 0;
+                    $sql = mysqli_query($conn, "select * from products");
+                    if(!$sql){
+                        exit("ERROR :".mysqli_error($conn));
+                    }else{
+                        if(mysqli_num_rows($sql) < 1){
+                ?>
+                                <div  style="height: 50vh;" class="col-md-6 mt-2 d-flex justify-content-center">
+                                    <div style="display: flex; justify-content:center; align-items: center; position: relative; left: 50%" class="item-container">
+                                      <h3>No Products available</h3>
+                                    </div>
+                                </div>
+                <?php
+                            }else{
+                                while($row=mysqli_fetch_assoc($sql)){
+                                    $sn++;
+                             
+                ?>
                                 <div class="col-md-6 mt-2 d-flex justify-content-center">
                                     <div style="" class="item-container">
                                         <div style="" style="" class="item-img">
@@ -85,6 +92,7 @@
                                         <div style="" class="" >
                                             <p class=""><?=$row['product_name'] ?></p>
                                             <p class=""><?=$row['product_price'] ?></p>
+                                            <p class=""><?=$row['vendor_label'] ?></p>
                                         </div>
                                         <div>
                                             <a href="addToCart.php?action=<?=$row['id'] ?>" class="btn btn primary">Add To Cart</a>
@@ -92,10 +100,11 @@
                                         </div>
                                     </div>
                                 </div>
-                    <?php
+                <?php
                             }
                         }
-                    ?>
+                    }
+                ?>
             </div>
         </div>
         <hr>

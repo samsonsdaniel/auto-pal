@@ -64,6 +64,7 @@
                     </thead>
                     <tbody>
                         <?php
+                                                                if($_SESSION['user_type'] == 1){
                                 $cId= $_SESSION['user_identity'];
                                 $cSql = mysqli_query($conn, "SELECT * FROM orders");
                                 if(mysqli_num_rows($cSql) > 0){
@@ -85,6 +86,26 @@
                                 }else{
                                     echo "No record!";
                                 }
+                            }else{
+                                $label = $cId= $_SESSION['user_identity'];
+                                $cSql = mysqli_query($conn, "SELECT * FROM orders WHERE vendor_label = $label");
+                                if(mysqli_num_rows($cSql) > 0){
+                                    while($row=mysqli_fetch_assoc($cSql)){
+                        ?>
+                                           <tr>
+                                            <td scope="row"><?=$row['totalPrice'] ?></td>
+                                            <td><?=$row['orderStatus'] ?></td>
+                                            <td><?=$row['paymentMode'] ?></td>
+                                            <td><?=$row['create_at'] ?></td>
+                                            <td>
+                                                <a href="view-orders.php?action=<?=$row['id'] ?>">View</a>
+                                            </td>
+
+                                        </tr>
+                        <?php
+                            }
+                        }
+                    }
 
                         ?>
                                                     

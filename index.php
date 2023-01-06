@@ -22,10 +22,15 @@ if (isset($_POST['btnLogin'])){
             }elseif(mysqli_num_rows($result) > 0){
     
                 while($row =  mysqli_fetch_assoc($result)){
-                $hashed_password = $row['password'];
-                $id = $row['id'];
-                $email = $row['email'];
-                $user_type = $row['user_type'];
+                    $hashed_password = $row['password'];
+                    $id = $row['id'];
+                    $email = $row['email'];
+                    $user_type = $row['user_type'];
+                    $uid = $row['id'];
+                    // $uquery = mysqli_query($conn, "SELECT * FROM users_data WHERE user_id = '$uid'");
+                    // $rcord = mysqli_fetch_assoc($uquery);
+                    // $fullName = "";
+                    // $fullName = $rcord['firstname']. " ". $rcord['lastname'];
         
                 }
         
@@ -47,6 +52,7 @@ if (isset($_POST['btnLogin'])){
                     $_SESSION['user_identity'] = $id;
                     $_SESSION['id']=TRUE;
                     $_SESSION['user_email'] = $email;
+                    // $_SESSION['fullname'] = $fullName;
                     $_SESSION['TypeOfUser'] = $user_type; 
             
                     //   $duration = time(60 * 60 * 24 * 365);

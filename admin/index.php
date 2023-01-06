@@ -3,6 +3,10 @@
     if(!isset($_SESSION['user_identity'])){
         header('location: login.php');
     }
+
+    // echo "<pre>";
+    // exit(print_r($_SESSION));
+    // echo "<pre>";
     include("../includes/db_connection.php");
     include("../includes/functions.php");
 

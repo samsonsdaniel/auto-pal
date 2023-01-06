@@ -24,9 +24,10 @@
                 }elseif(mysqli_num_rows($result) > 0){
         
                     while($row =  mysqli_fetch_assoc($result)){
-                    $hashed_password = $row['password'];
-                    $id = $row['id'];
-                    $email = $row['email'];
+                        $hashed_password = $row['password'];
+                        $id = $row['id'];
+                        $email = $row['email'];
+                        $userType = $row['user_role'];
             
                     }
             
@@ -48,6 +49,7 @@
                         $_SESSION['user_identity'] = $id;
                         $_SESSION['id']=TRUE;
                         $_SESSION['user_email'] = $email;
+                        $_SESSION['user_type'] = $userType;
                 
                         //   $duration = time(60 * 60 * 24 * 365);
                 

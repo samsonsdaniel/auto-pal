@@ -8,22 +8,31 @@
 		
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	        	<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
-	        	<li class="nav-item"><a href="addUser.php" class="nav-link">Add User</a></li>
-	        	<li class="nav-item"><a href="roles.php" class="nav-link">All Roles</a></li>
-	        	<li class="nav-item"><a href="product.php" class="nav-link">Products</a></li> 
-				<li class="nav-item"><a href="orders.php" class="nav-link">View Orders</a></li>
-	        	<li class="nav-item"><a href="logout.php" class="nav-link">logout</a></li>
+				<?php
+					if($_SESSION['user_type'] == 1){
+				?>
+						<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="addUser.php" class="nav-link">Add User</a></li>
+						<li class="nav-item"><a href="roles.php" class="nav-link">All Roles</a></li>
+						<li class="nav-item"><a href="product.php" class="nav-link">Products</a></li> 
+						<li class="nav-item"><a href="orders.php" class="nav-link">View Orders</a></li>
+						<li class="nav-item"><a href="logout.php" class="nav-link">logout</a></li>
+				<?php
+					}else{
+				?>
+						<li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="product.php" class="nav-link">Products</a></li> 
+						<li class="nav-item"><a href="orders.php" class="nav-link">View Orders</a></li>
+						<li class="nav-item"><a href="logout.php" class="nav-link">logout</a></li>
              
-	          <!-- <li class="nav-item"><a href="logout.php" class="nav-link">Logout</a></li> 
-	        </ul>
+				<?php
+					}
+				?>
             
             </ul>
-     <p class="col-md-1"></p> -->
         </div>
 
 	      </div>
 	    </div>
 	  </nav>
     <!-- END nav -->
-  

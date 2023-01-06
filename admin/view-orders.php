@@ -69,32 +69,70 @@
                                 $cId= $_SESSION['user_identity'];
                                 if (isset($_GET['action'])){
                                     $oId = $_GET['action'];
-                                    $oSql = mysqli_query($conn, "SELECT * FROM orders WHERE id = $oId  AND user_id = $cId");
-                                    $orow = mysqli_fetch_assoc($oSql);
-                                    
-                                    $cSql = mysqli_query($conn, "SELECT * FROM orderTracking WHERE orderid = $oId");
-                                    if(mysqli_num_rows($cSql) > 0){
-                                        while($row=mysqli_fetch_assoc($cSql)){
-                                            $pId = $row['productid'];
+                                        if($_SESSION['user_type'] == 1){
+                                
+                                            $oSql = mysqli_query($conn, "SELECT * FROM orders WHERE id = $oId  AND user_id = $cId");
+                                            $orow = mysqli_fetch_assoc($oSql);
+                                            
+                                            $cSql = mysqli_query($conn, "SELECT * FROM orderTracking WHERE orderid = $oId");
+                                            if(mysqli_num_rows($cSql) > 0){
+                                                while($row=mysqli_fetch_assoc($cSql)){
+                                                    $pId = $row['productid'];
                                             ?>
-                                            <tr>
-                                                <td scope="row">
-                                                    <?php 
-                                                        $proSql = mysqli_query($conn, "SELECT * FROM products WHERE id = $pId ");
-                                                        $prow = mysqli_fetch_assoc($proSql);
-                                                        echo $prow['product_name'];
+                                                                        <tr>
+                                <td>admin</td>
+                            </tr>
+                                                    <tr>
+                                                        <td scope="row">
+                                                            <?php 
+                                                                $proSql = mysqli_query($conn, "SELECT * FROM products WHERE id = $pId ");
+                                                                $prow = mysqli_fetch_assoc($proSql);
+                                                                echo $prow['product_name'];
 
-                                                    ?>
-                                                </td>
-                                                <td><?=$row['quantity'] ?></td>
-                                                <td><?=$row['productprice'] ?></td>
-                                                <td><?php echo $row['quantity'] * $row['productprice'] ?></td>
-                                                <td>
-                                                    <a href="view-product.php?action=<?=$row['productid'] ?>">View</a>
-                                                </td>
+                                                            ?>
+                                                        </td>
+                                                        <td><?=$row['quantity'] ?></td>
+                                                        <td><?=$row['productprice'] ?></td>
+                                                        <td><?php echo $row['quantity'] * $row['productprice'] ?></td>
+                                                        <td>
+                                                            <a href="view-product.php?action=<?=$row['productid'] ?>">View</a>
+                                                        </td>
 
-                                            </tr>
+                                                    </tr>
                             <?php
+                                                }
+                                            }else{
+                                                $oSql = mysqli_query($conn, "SELECT * FROM orders WHERE id = $oId  AND user_id = $cId");
+                                                $orow = mysqli_fetch_assoc($oSql);
+                                                
+                                                $cSql = mysqli_query($conn, "SELECT * FROM orderTracking WHERE orderid = $oId");
+                                                if(mysqli_num_rows($cSql) > 0){
+                                                    while($row=mysqli_fetch_assoc($cSql)){
+                                                        $pId = $row['productid'];
+                            ?>
+                                                    <tr>
+                                                        <td>vendor</td>
+                                                    </tr>
+                                                        <tr>
+                                                            <td scope="row">
+                                                                <?php 
+                                                                    $proSql = mysqli_query($conn, "SELECT * FROM products WHERE id = $pId ");
+                                                                    $prow = mysqli_fetch_assoc($proSql);
+                                                                    echo $prow['product_name'];
+
+                                                                ?>
+                                                            </td>
+                                                            <td><?=$row['quantity'] ?></td>
+                                                            <td><?=$row['productprice'] ?></td>
+                                                            <td><?php echo $row['quantity'] * $row['productprice'] ?></td>
+                                                            <td>
+                                                                <a href="view-product.php?action=<?=$row['productid'] ?>">View</a>
+                                                            </td>
+
+                                                        </tr>
+                            <?php
+                                            }
+                                            }
                                         }
                                 
                                     }else{

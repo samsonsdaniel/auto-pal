@@ -8,13 +8,17 @@
     if(isset($_POST['btnAddPro'])){
         $pro_name = $_POST['pro_name'];
         $pro_price = $_POST['pro_price'];
-
+        $vendor_label =$_POST['vendor_label'];
+        $cId = $_POST['vendor'];
         $file_name = $_FILES['pro_img']['name'];
         $file_type = $_FILES['pro_img']['type'];
         $file_size = $_FILES['pro_img']['size'];
         $temp_location = $_FILES['pro_img']['tmp_name'];
         $error= $_FILES['pro_img']['error'];
         $upload_path="uploads/";
+        // echo "<pre>";
+        // exit(print_r($_POST));
+        // echo "<pre>";
 
         if ($file_size > 1000000000) {
             exit("File too, large please upload only file lower than 1MB");
@@ -37,7 +41,7 @@
                 // echo "Image uploaded successfully!";
             }
         }
-        $query = "INSERT INTO products (product_name, product_price, product_img) VALUES ('$pro_name', '$pro_price', '$new_file_name')";
+        $query = "INSERT INTO products (user_id, product_name, product_price, product_img, vendor_label) VALUES ($cId, '$pro_name', '$pro_price', '$new_file_name', '$vendor_label')";
         $result = mysqli_query($conn, $query);
 
         if(!$result){
@@ -87,23 +91,34 @@
   
 
   <div class="row signup-form">
-    <div class="container col-md-3">
+    <div class="container col-md-12">
       <div class="row">
         <div class="container s-cont col-md-12">
         
-            <h6 class="section-secondary-title mt-5">Striped rows :</h6>
 
             <div class="container">
+                <h6 class="section-secondary-title mt-5 text-center">Add Product</h6>
                 <div class="row">
                     <div class="col-md-4 offset-4">
                         <form action="addProduct.php" class="form-horizontal" enctype="multipart/form-data" method="post">
                             <div class="form-group">
+                                <label for="">Product Name</label>
                                 <input type="text" value="" name="pro_name" id="" class="form-control">
                             </div>
                             <div class="form-group">
+                              <label for="">Label</label>
+                              <input type="text" class="form-control" name="vendor_label" id="" aria-describedby="helpId" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product Price</label>
                                 <input type="text" value="" name="pro_price" id="" class="form-control">
                             </div>
                             <div class="form-group">
+                                <label for="">vendor</label>
+                                <input type="text" name="vendor" value="<?=$_SESSION['user_identity'] ?>" id="" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Product Image</label>
                                 <input type="file" value="" name="pro_img" id="" class="form-control">
                             </div>
                             <div class="form-group">
