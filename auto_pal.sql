@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 20, 2022 at 08:51 PM
+-- Generation Time: Jan 06, 2023 at 01:22 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -38,7 +38,8 @@ CREATE TABLE `admin_role` (
 --
 
 INSERT INTO `admin_role` (`id`, `roles`, `created_at`) VALUES
-(1, 'admin', '2022-12-15 08:29:11');
+(1, 'admin', '2022-12-15 08:29:11'),
+(2, 'vendor', '2022-12-23 00:13:56');
 
 -- --------------------------------------------------------
 
@@ -60,8 +61,9 @@ CREATE TABLE `admin_user` (
 --
 
 INSERT INTO `admin_user` (`id`, `username`, `email`, `password`, `user_role`, `created_at`) VALUES
-(1, 'admin', 'admin@mail.com', '$2y$10$BF2sR2TPirHZVD3AUzDF0eQM77ZIs3kXwD2bZQ7KCMO/Qo3OuVW26', 1, '2022-12-15 08:47:12'),
-(2, 'newuser', 'newuser@mail.com', '$2y$10$ANll4oed7Oh8YxSG6sqtMetQBHN65C8pg.ymPjMHrQ0XBALGxGNFK', 2, '2022-12-15 08:48:57');
+(9, 'butcher store', 'naanman10@gmail.com', '$2y$10$2obx8yeFCiRXav26LJG1GejdOEShqBR0jYzlUC9KlbLb95oA8xNRq', 2, '2023-01-05 22:54:52'),
+(10, 'theafricanchild', 'theafricanchild19@gmail.com', '$2y$10$W6TTgooimJgfGqOHdIoO..9GNpG3gig6/BcSBKMZms0MLsm3QFpFa', 2, '2023-01-05 23:00:29'),
+(11, 'adminautopalservice247', 'autopalservice247@gmail.com', '$2y$10$.hRnlewQ24Xuk5v80gPSOuth0gEiO6UDsGUuWBTYbA71mXqmBOqFK', 1, '2023-01-05 23:15:17');
 
 -- --------------------------------------------------------
 
@@ -77,17 +79,6 @@ CREATE TABLE `booking` (
   `theTime` time NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `booking`
---
-
-INSERT INTO `booking` (`id`, `user_id`, `mech_id`, `theDate`, `theTime`, `createdAt`) VALUES
-(23, 36, 39, '2022-12-26', '13:24:00', '2022-12-15 12:24:16'),
-(24, 36, 40, '2022-12-30', '13:24:00', '2022-12-15 12:24:36'),
-(25, 37, 41, '2022-12-30', '13:25:00', '2022-12-15 12:25:05'),
-(26, 37, 42, '2022-12-28', '13:25:00', '2022-12-15 12:25:15'),
-(27, 38, 43, '2022-12-21', '13:54:00', '2022-12-15 12:54:16');
 
 -- --------------------------------------------------------
 
@@ -111,7 +102,13 @@ CREATE TABLE `details` (
 INSERT INTO `details` (`id`, `user_id`, `car_type`, `car_color`, `car_model`, `create_at`) VALUES
 (9, 36, 1, 'Black', 'Compressor', '2022-12-15 12:16:54'),
 (10, 37, 2, 'Black', 'Saden', '2022-12-15 12:17:33'),
-(11, 38, 3, 'Black', 'A5', '2022-12-15 12:18:15');
+(11, 38, 3, 'Black', 'A5', '2022-12-15 12:18:15'),
+(12, 45, 2, 'Black', 'Compressor', '2022-12-24 14:27:27'),
+(13, 46, 4, 'Black', 'A5', '2022-12-25 10:39:23'),
+(14, 47, 1, 'Black', 'Compressor', '2022-12-26 23:19:01'),
+(15, 48, 3, 'Black', 'A5', '2022-12-26 23:36:28'),
+(16, 49, 1, 'Black', 'latest version', '2023-01-05 22:37:03'),
+(17, 50, 6, 'black', 'latest version', '2023-01-05 22:38:32');
 
 -- --------------------------------------------------------
 
@@ -189,6 +186,7 @@ CREATE TABLE `orders` (
   `totalPrice` varchar(64) NOT NULL,
   `orderStatus` varchar(128) NOT NULL,
   `paymentMode` varchar(128) NOT NULL,
+  `vendor_label` varchar(128) NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -196,10 +194,9 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `totalPrice`, `orderStatus`, `paymentMode`, `create_at`) VALUES
-(14, 36, '25600', 'Order Placed', '', '2022-12-17 09:25:10'),
-(15, 36, '5300', 'Order Placed', '', '2022-12-20 20:46:23'),
-(16, 37, '35800', 'Order Placed', '', '2022-12-20 20:48:57');
+INSERT INTO `orders` (`id`, `user_id`, `totalPrice`, `orderStatus`, `paymentMode`, `vendor_label`, `create_at`) VALUES
+(47, 50, '100000000', 'Order Placed', '', 'theafricanchild19@gmail.com', '2023-01-06 01:08:21'),
+(48, 49, '100000000', 'Order Placed', '', 'naanman10@gmail.com', '2023-01-06 01:10:28');
 
 -- --------------------------------------------------------
 
@@ -220,13 +217,8 @@ CREATE TABLE `orderTracking` (
 --
 
 INSERT INTO `orderTracking` (`id`, `orderid`, `productid`, `quantity`, `productprice`) VALUES
-(27, 14, 1, 2, 300),
-(28, 14, 2, 5, 5000),
-(29, 15, 1, 1, 300),
-(30, 15, 2, 1, 5000),
-(31, 16, 1, 1, 300),
-(32, 16, 2, 1, 5000),
-(33, 16, 4, 1, 30500);
+(66, 47, 17, 1, 100000000),
+(67, 48, 16, 1, 100000000);
 
 -- --------------------------------------------------------
 
@@ -255,6 +247,7 @@ CREATE TABLE `products` (
   `product_price` varchar(64) NOT NULL,
   `product_desc` text DEFAULT NULL,
   `product_img` varchar(258) DEFAULT NULL,
+  `vendor_label` varchar(255) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -263,13 +256,11 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `user_id`, `product_name`, `product_price`, `product_desc`, `product_img`, `category_id`, `created_at`) VALUES
-(1, NULL, 'Spanner', '300', NULL, 'uploads/639c326651a75.jpg', NULL, '2022-12-16 08:55:02'),
-(2, NULL, 'Jack', '5000', NULL, 'uploads/639c354e1d7b5.jpg', NULL, '2022-12-16 09:07:26'),
-(3, NULL, 'tyre', '50000', NULL, 'uploads/639c359f32c01.jpg', NULL, '2022-12-16 09:08:47'),
-(4, NULL, 'Compressor', '30500', NULL, 'uploads/639c35e5f047c.jpg', NULL, '2022-12-16 09:09:57'),
-(5, NULL, 'plug', '700', NULL, 'uploads/639c367dda48c.jpg', NULL, '2022-12-16 09:12:29'),
-(6, NULL, 'plug', '700', NULL, 'uploads/639c371d57ed2.jpg', NULL, '2022-12-16 09:15:09');
+INSERT INTO `products` (`id`, `user_id`, `product_name`, `product_price`, `product_desc`, `product_img`, `vendor_label`, `category_id`, `created_at`) VALUES
+(16, 9, 'Mercedes Engine', '100000000', NULL, 'uploads/63b7566041352.jpg', 'butcher store', NULL, '2023-01-05 22:59:44'),
+(17, 10, 'Peugeot Engine ', '100000000', NULL, 'uploads/63b75746331d4.jpg', 'theafricanchild', NULL, '2023-01-05 23:03:34'),
+(18, 11, 'Mercedes Benz R129 AC Vent Levers and Housings', '39.00', NULL, 'uploads/63b75af90b537.png', 'Auto Pals', NULL, '2023-01-05 23:19:21'),
+(19, 11, 'auto crop', '400.00', NULL, 'uploads/63b75c53b7dc3.png', 'Auto Pals', NULL, '2023-01-05 23:25:07');
 
 -- --------------------------------------------------------
 
@@ -325,15 +316,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `user_type`, `password`, `createdAt`) VALUES
-(36, 'newuser1', 'newuser1@mail.com', '2', '$2y$10$mT54.E6.JekN4xB8/r5lzuM31JT8No2DOVekWbSUIM0NTRRJanLKS', '2022-12-15 12:16:29'),
-(37, 'newuser2', 'newuser2@mail.com', '2', '$2y$10$a5BajpHIguw1aQnTqVcBeevzGAACI6BlvOYhB692kDJolfDrpEKaS', '2022-12-15 12:17:18'),
-(38, 'newuser3', 'newuser3@mail.com', '2', '$2y$10$DUkFz2gDhyECfwperHKoUeGo1GR5cDDVuvR3CF/P8.JwV.5gKJOsC', '2022-12-15 12:17:59'),
-(39, 'newmech1', 'newmech1@mail.com', '1', '$2y$10$NvSAWpO6u4Tw3GSgTGE3Eu7Fd3Dzf620l7XE21fc.f6Ok/K1790Dm', '2022-12-15 12:18:43'),
-(40, 'newmech2', 'newmech2@mail.com', '1', '$2y$10$f7tAp74Vdvv2cSXLs/jm7OEXMzCUv3mAFAhSdOQfhGAA2B9lIQLSG', '2022-12-15 12:19:37'),
-(41, 'newmech3', 'newmech3@mail.com', '1', '$2y$10$6rhDSUcFSbW/iTYPrQhHJeYL3iAOr2Zh0wJ2Q0JneHbGzlYctxIEe', '2022-12-15 12:20:17'),
-(42, 'newmech4', 'newmech4@mail.com', '1', '$2y$10$9KR7ZeoKUbbnPcZlkDYZpOKk87aaSlB8gRbGaR.G1p8RECSAw30Pm', '2022-12-15 12:21:49'),
-(43, 'newmech5', 'newmech5@mail.com', '1', '$2y$10$2I4WIsniaSw7Yz0LH9UTJOgnMrra8yO7QlctQmV/IcYRXqSeFjqmW', '2022-12-15 12:22:35'),
-(44, 'newmech6', 'newmech6@mail.com', '1', '$2y$10$DTatqxLK8I/V84JninBVMuexhPDtZxM23z1gyawXCJ6AidYxzgDmW', '2022-12-15 12:23:13');
+(49, 'theafricanchild', 'theafricanchild19@gmail.com', '2', '$2y$10$qxPY.wy5E8BVj2i.eeuzl.4Vv1MvCfEuJk7SW2FLQKShzU/SGK/O.', '2023-01-05 22:36:39'),
+(50, 'butcher', 'naanman10@gmail.com', '2', '$2y$10$p03UUJNUPZG0wtcZzreRhOqJcuIoli37b.LpDG0e3RMKtkT1U0fL.', '2023-01-05 22:37:37');
 
 -- --------------------------------------------------------
 
@@ -358,12 +342,8 @@ CREATE TABLE `users_data` (
 --
 
 INSERT INTO `users_data` (`id`, `user_id`, `firstname`, `lastname`, `img`, `mobile_phone`, `user_type`, `address`, `created_at`) VALUES
-(13, 39, 'Dung', 'Umar', NULL, '987654323', 1, 'Dadin Kowa', '2022-12-17 09:13:21'),
-(14, 40, 'Sadiq', 'Umar', NULL, NULL, 1, 'dfsdjf', '2022-12-15 12:19:59'),
-(15, 41, 'johm', 'Doe', NULL, NULL, 2, 'fjdhfhjf', '2022-12-15 12:20:46'),
-(16, 42, 'doe', 'john', NULL, NULL, 2, 'kfldld', '2022-12-15 12:22:12'),
-(30, 36, 'Dung', 'Peter', NULL, '987654323', 1, 'mama iyabo', '2022-12-20 20:46:23'),
-(31, 37, 'Dung', 'Umar', NULL, '987654321', 2, 'mama iyabo', '2022-12-20 20:48:57');
+(47, 50, 'Dung', 'Umar', NULL, '0903620192', 6, 'Mama Iyabo', '2023-01-06 01:08:21'),
+(48, 49, 'Sadiq', 'Peter', NULL, '00987654321', 1, 'Dadin Kowa', '2023-01-06 01:10:28');
 
 --
 -- Indexes for dumped tables
@@ -473,25 +453,25 @@ ALTER TABLE `users_data`
 -- AUTO_INCREMENT for table `admin_role`
 --
 ALTER TABLE `admin_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `admin_user`
 --
 ALTER TABLE `admin_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `details`
 --
 ALTER TABLE `details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `mechanic`
@@ -521,13 +501,13 @@ ALTER TABLE `orderItems`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `orderTracking`
 --
 ALTER TABLE `orderTracking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -539,7 +519,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `reply`
@@ -557,13 +537,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `users_data`
 --
 ALTER TABLE `users_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
